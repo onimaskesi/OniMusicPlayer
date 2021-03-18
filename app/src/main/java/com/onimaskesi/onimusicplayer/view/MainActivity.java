@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,10 +20,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnAudioListener {
 
     private int STORAGE_PERMISSION_CODE = 1;
 
+    private ArrayList<File> audioFiles;
     private String[] audioFileNames;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayAudioFilesName()
     {
-        final ArrayList<File> audioFiles = getAllAudioFiles(Environment.getExternalStorageDirectory());
+        audioFiles = getAllAudioFiles(Environment.getExternalStorageDirectory());
 
         audioFileNames = new String[audioFiles.size()];
 
@@ -116,8 +118,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeRecyclerView(){
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerViewAdapter = new RecyclerViewAdapter(audioFileNames);
+        recyclerViewAdapter = new RecyclerViewAdapter(audioFileNames, this);
         recyclerView.setAdapter(recyclerViewAdapter);
     }
 
+    @Override
+    public void onAudioClick(int position) {
+        Intent intent = new Intent(this, SongPlayerActivity.class);
+        intent.putExtra("position",position);
+        intent.putExtra("audios", audioFiles);
+        startActivity(intent);
+    }
 }
