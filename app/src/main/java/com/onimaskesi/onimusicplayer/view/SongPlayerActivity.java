@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -158,6 +159,18 @@ public class SongPlayerActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        // This is the center button for headphones
+        if(event.getKeyCode() ==KeyEvent.KEYCODE_HEADSETHOOK)
+        {
+            openASR();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     public void voiceCommandClick(View view) {
 
