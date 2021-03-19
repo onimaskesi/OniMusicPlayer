@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Oni Music Player</string>
+    <string name="next_command">Next</string>
+    <string name="back_command">Back</string>
+    <string name="play_command">Start</string>
+    <string name="pause_command">Stop</string>
 </resources>

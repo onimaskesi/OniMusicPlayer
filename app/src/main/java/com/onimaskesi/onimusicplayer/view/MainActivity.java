@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
 
         checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
-
         recyclerView = findViewById(R.id.recyclerView);
 
         displayAudioFilesName();
