@@ -35,7 +35,7 @@ import com.onimaskesi.onimusicplayer.R;
 import java.io.File;
 import java.util.ArrayList;
 
-public class SongPlayerActivity extends AppCompatActivity {
+public class SongPlayerActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener {
 
     private int VOICE_PERMISSION_CODE = 2;
     private static final int REQUEST_CODE_ASR = 100;
@@ -45,7 +45,6 @@ public class SongPlayerActivity extends AppCompatActivity {
     private String BACK_COMMAND;
     private String PLAY_COMMAND;
     private String PAUSE_COMMAND;
-
 
     private ImageView musicIcon;
     private TextView musicNameTV;
@@ -77,6 +76,7 @@ public class SongPlayerActivity extends AppCompatActivity {
         PAUSE_COMMAND = getString(R.string.pause_command).toUpperCase();
 
     }
+
 
     public void backClick(View view) {
         back();
@@ -137,6 +137,7 @@ public class SongPlayerActivity extends AppCompatActivity {
         player = MediaPlayer.create(this, uri);
         player.start();
         playPauseIcon.setImageResource(R.drawable.pause);
+        player.setOnCompletionListener(this);
     }
 
     public void useVoiceCommand(){
@@ -158,7 +159,6 @@ public class SongPlayerActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
@@ -310,4 +310,16 @@ public class SongPlayerActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        next();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        player.release();
+    }
+
+    
 }

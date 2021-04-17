@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.onimaskesi.onimusicplayer.R;
 import com.onimaskesi.onimusicplayer.adapter.RecyclerViewAdapter;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
 
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
         recyclerView = findViewById(R.id.recyclerView);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
 
         displayAudioFilesName();
     }
@@ -111,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             audioFileNames[i] = audioFiles.get(i).getName();
         }
 
+        progressBar.setVisibility(View.INVISIBLE);
         initializeRecyclerView();
 
     }
