@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/purple_500"
     android:gravity="center"
+    android:id="@+id/main_layout"
     tools:context=".view.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView

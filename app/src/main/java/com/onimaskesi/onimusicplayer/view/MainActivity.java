@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.onimaskesi.onimusicplayer.R;
 import com.onimaskesi.onimusicplayer.adapter.RecyclerViewAdapter;
+import com.onimaskesi.onimusicplayer.util.ViewUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,13 +40,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
         recyclerView = findViewById(R.id.recyclerView);
-
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.VISIBLE);
 
-        displayAudioFilesName();
+        checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
+
     }
 
     public void checkPermission(String permission, int requestCode)
@@ -53,11 +54,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         // Checking if permission is not granted
         if (ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_DENIED) {
 
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { permission }, requestCode);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] {permission }, requestCode);
 
         }
         else {
             //Toast.makeText(MainActivity.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+            displayAudioFilesName();
         }
 
     }
@@ -75,10 +77,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 //Toast.makeText(MainActivity.this, "Read External Storage Permission Granted", Toast.LENGTH_SHORT).show();
+                displayAudioFilesName();
 
             }
             else {
                 //Toast.makeText(MainActivity.this, "Read External Storage Denied", Toast.LENGTH_SHORT).show();
+                ViewUtil.createSnackbar(
+                        "If you want to use this app, you have to accept permissions",
+                        findViewById(R.id.main_layout)
+                );
+
             }
         }
     }

@@ -6,22 +6,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.transition.TransitionManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -31,6 +25,7 @@ import android.widget.Toast;
 import com.huawei.hms.mlplugin.asr.MLAsrCaptureActivity;
 import com.huawei.hms.mlplugin.asr.MLAsrCaptureConstants;
 import com.onimaskesi.onimusicplayer.R;
+import com.onimaskesi.onimusicplayer.util.ViewUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -257,6 +252,7 @@ public class SongPlayerActivity extends AppCompatActivity implements MediaPlayer
 
         }
         else {
+
             openASR();
 
         }
@@ -280,6 +276,11 @@ public class SongPlayerActivity extends AppCompatActivity implements MediaPlayer
             }
             else {
                 //Toast.makeText(MainActivity.this, "Read External Storage Denied", Toast.LENGTH_SHORT).show();
+                ViewUtil.createSnackbar(
+                        "If you want to use this feature, you have to accept the permission",
+                        findViewById(R.id.root_layout)
+                );
+
             }
         }
     }
@@ -321,5 +322,5 @@ public class SongPlayerActivity extends AppCompatActivity implements MediaPlayer
         player.release();
     }
 
-    
+
 }
